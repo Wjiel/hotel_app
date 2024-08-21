@@ -4,7 +4,6 @@ import 'package:hotel_app/main_page.dart';
 
 import 'features/Booking_List_Screen/View/BookingListScreen.dart';
 import 'features/Restaurant_Screen/View/RestaurantScreen.dart';
-import 'features/main_screen/view/BodyAct.dart';
 
 class MainScreenNew extends StatefulWidget {
   const MainScreenNew({super.key});
@@ -19,7 +18,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
   final Color _unselectedColor = const Color(0xFF484848);
   int _selectedIndex = 0;
 
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
 
   @override
@@ -77,6 +76,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
           ],
         ),
         body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _pageController,
           children: [
 
@@ -100,7 +100,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
               onTap: (index) {
                 setState(() {
                   _selectedIndex = index;
-                  _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOutCubic);
+                  _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOutCubic);
                 });
               },
               items: [
