@@ -1,73 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_app/features/Booking_List_Screen/View/BookingListScreen.dart';
-import 'package:hotel_app/features/Restaurant_Screen/View/RestaurantScreen.dart';
-import 'package:hotel_app/features/main_screen/view/BodyAct.dart';
 
-int currentPageIndex = 0;
-
-Widget CurrentPage() {
-  var activiti = [
-    const body_main_activity(),
-    const body_booking_list_activity(),
-    const restaurant_activity()
-  ];
-  return activiti[currentPageIndex];
-}
-
-class CustomBottomNavigation extends StatefulWidget {
-  Function Update;
-
-  CustomBottomNavigation({super.key, required this.Update});
+class custombuttombar extends StatefulWidget {
+  const custombuttombar({super.key});
 
   @override
-  State<CustomBottomNavigation> createState() => _CustomBottomNavigationState();
+  State<custombuttombar> createState() => _custombuttombarState();
 }
 
-class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
-  final Color _selected = const Color(0xFF244F8F);
-  final Color _unselected = const Color(0xFF484848);
+class _custombuttombarState extends State<custombuttombar> {
+  final Color _selectedColor = const Color(0xFF244F8F);
 
-  List<BottomNavigationBarItem> _items() {
-    return [
-      const BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: 'Главная',
-      ),
-      BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/images/imageBron.png',
-          color: currentPageIndex == 1 ? _selected : _unselected,
-        ),
-        label: 'Бронь',
-      ),
-      BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/images/Restaurant.png',
-          color: currentPageIndex == 2 ? _selected : _unselected,
-        ),
-        label: 'Ресторан',
-      ),
-    ];
-  }
+  final Color _unselectedColor = const Color(0xFF484848);
 
-  void changePage(int index) {
-    setState(() {
-      currentPageIndex = index;
-    });
-    widget.Update();
-  }
+  int _selectedIndex = 0;
+
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      backgroundColor: Colors.white,
-      selectedItemColor: _selected,
-      unselectedItemColor: _unselected,
-      items: _items(),
-      currentIndex: currentPageIndex,
-      onTap: (index) {
-        changePage(index);
-      },
+    return Container(
+      decoration: const BoxDecoration(
+          border: Border(top: BorderSide(color: Color(0xFFADADAD)))),
+      child: BottomNavigationBar(
+          selectedLabelStyle: TextStyle(
+              color: _selectedColor, fontWeight: FontWeight.w700, fontSize: 12),
+          unselectedLabelStyle: TextStyle(
+              color: _unselectedColor,
+              fontWeight: FontWeight.w400,
+              fontSize: 12),
+          backgroundColor: Colors.white,
+          selectedItemColor: _selectedColor,
+          unselectedItemColor: _unselectedColor,
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+              _pageController.animateToPage(index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOutCubic);
+            });
+          },
+          items: [
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Главная',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/images/imageBron.png',
+                color: _selectedIndex == 1 ? _selectedColor : _unselectedColor,
+              ),
+              label: 'Бронь',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/images/Restaurant.png',
+                color: _selectedIndex == 2 ? _selectedColor : _unselectedColor,
+              ),
+              label: 'Ресторан',
+            ),
+          ]),
     );
   }
 }
