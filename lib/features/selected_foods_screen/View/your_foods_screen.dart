@@ -67,7 +67,9 @@ class SelectedFoodsScreen extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: SizedBox(
-              height: _itemCount > 6 ? (_itemCount * 70).toDouble() : 430,
+              height: _itemCount > 6
+                  ? (_itemCount * 70).toDouble()
+                  : MediaQuery.of(context).size.height * 0.53,
               width: 390,
               child: ListView.builder(
                 clipBehavior: Clip.none,

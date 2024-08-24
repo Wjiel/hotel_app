@@ -122,7 +122,7 @@ class FoodScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.width / 3.5,
+                  height: MediaQuery.of(context).size.height * 0.06,
                 ),
                 Row(children: [
                   const AutoSizeText(
